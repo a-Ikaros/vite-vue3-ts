@@ -3,82 +3,69 @@
     <ul class="nav-list">
       <li
         class="nav-item flex-center"
-        v-for="(nav, index) in navList"
+        v-for="(nav, index) in reactiveData.navList"
         :key="index"
         :class="{ active: nav.isActive }"
-        @click="navClick(nav)"
-      >
-        {{ nav.name }}
-      </li>
+        @click="reactiveData.navClick(nav)"
+      >{{ nav.name }}</li>
     </ul>
   </aside>
 </template>
 
-<script lang="ts">
-import { defineComponent, reactive, toRefs, onMounted, watch } from 'vue'
+<script lang="ts" setup>
+import { reactive, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { NavItem } from '../common/types'
+const router = useRouter()
 
-export default defineComponent({
-  name: 'Nav',
-
-  setup() {
-    const router = useRouter()
-
-    const reactiveData = reactive({
-      navList: [
-        {
-          name: 'Home',
-          isActive: false,
-          path: '/'
-        },
-        {
-          name: 'Vuex',
-          isActive: false,
-          path: '/vuex'
-        },
-        {
-          name: 'Axios',
-          isActive: false,
-          path: '/axios'
-        },
-        {
-          name: 'Test',
-          isActive: false,
-          path: '/test'
-        }
-      ],
-
-      navClick(e: NavItem) {
-        router.push(e.path)
-      }
-    })
-
-    const changeNavActive = (currentPath: string) => {
-      reactiveData.navList.forEach((v: NavItem) => {
-        const temp = v
-        temp.isActive = temp.path === currentPath
-        return temp
-      })
+const reactiveData = reactive({
+  navList: [
+    {
+      name: 'Home',
+      isActive: false,
+      path: '/'
+    },
+    {
+      name: 'Vuex',
+      isActive: false,
+      path: '/vuex'
+    },
+    {
+      name: 'Axios',
+      isActive: false,
+      path: '/axios'
+    },
+    {
+      name: 'Test',
+      isActive: false,
+      path: '/test'
     }
+  ],
 
-    watch(
-      () => router.currentRoute.value,
-      (_n) => {
-        changeNavActive(_n.path)
-      }
-    )
-
-    onMounted(() => {
-      router.isReady().then(() => {
-        changeNavActive(router.currentRoute.value.path)
-      })
-    })
-
-    return {
-      ...toRefs(reactiveData)
-    }
+  navClick(e: NavItem) {
+    router.push(e.path)
   }
+})
+
+const changeNavActive = (currentPath: string) => {
+  reactiveData.navList.forEach((v: NavItem) => {
+    const temp = v
+    temp.isActive = temp.path === currentPath
+    return temp
+  })
+}
+
+watch(
+  () => router.currentRoute.value,
+  (_n) => {
+    changeNavActive(_n.path)
+  }
+)
+
+onMounted(() => {
+  router.isReady().then(() => {
+    changeNavActive(router.currentRoute.value.path)
+  })
 })
 </script>
 

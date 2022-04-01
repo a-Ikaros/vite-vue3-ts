@@ -6,8 +6,8 @@
         <template #header>
           <div class="card-header">
             <span>XPoet</span>
-            <el-button class="button" type="text" @click="getUserInfo"
-              >点击获取XPoet信息
+            <el-button class="button" type="text" @click="getUserInfo">
+              点击获取XPoet信息
             </el-button>
           </div>
         </template>
@@ -21,38 +21,27 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, Ref } from 'vue'
+<script lang="ts" setup>
+import { ref, Ref } from 'vue'
 import axios from '../utils/axios'
 
-export default defineComponent({
-  name: 'Axios',
-  setup() {
-    const userInfo: Ref = ref(null)
-    const loading = ref(false)
+const userInfo: Ref = ref(null)
+const loading = ref(false)
 
-    const getUserInfo = () => {
-      loading.value = true
-      axios
-        .get('/users/XPoet')
-        .then((response) => {
-          console.log('response: ', response.data)
-          userInfo.value = response.data
-          loading.value = false
-        })
-        .catch((error) => {
-          loading.value = false
-          console.error(error)
-        })
-    }
-
-    return {
-      userInfo,
-      loading,
-      getUserInfo
-    }
-  }
-})
+const getUserInfo = () => {
+  loading.value = true
+  axios
+    .get('/users/XPoet')
+    .then((response) => {
+      console.log('response: ', response.data)
+      userInfo.value = response.data
+      loading.value = false
+    })
+    .catch((error) => {
+      loading.value = false
+      console.error(error)
+    })
+}
 </script>
 
 <style scoped lang="stylus">

@@ -18,18 +18,9 @@
   </main>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-import Header from '@/components/Header.vue'
-import Nav from '@/components/Nav.vue'
-
-export default defineComponent({
-  name: 'Main',
-  components: {
-    Header,
-    Nav
-  }
-})
+<script lang="ts" setup>
+import Header from './Header.vue'
+import Nav from './Nav.vue'
 </script>
 
 <style scoped lang="stylus">

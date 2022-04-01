@@ -2,16 +2,8 @@
   <Main />
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-import Main from '@/components/Main.vue'
-
-export default defineComponent({
-  name: 'App',
-  components: {
-    Main
-  }
-})
+<script lang="ts" setup>
+import Main from './components/Main.vue'
 </script>
 
 <style lang="stylus">
