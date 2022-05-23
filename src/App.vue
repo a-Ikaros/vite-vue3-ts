@@ -1,11 +1,11 @@
 <template>
   <div>
-    <Test></Test>
+    <Home/>
   </div>
 </template>
 
 <script lang="ts" setup>
-import Test from './views/Test.vue';
+import Home from './views/Home.vue';
 </script>
 
 <style lang="less">
